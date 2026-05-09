@@ -2,30 +2,32 @@
 
 ## Quantization-Aware Residual CNN for FPGA-Based Image Enhancement
 
-An FPGA-accelerated deep learning pipeline for real-time image enhancement using Residual CNNs, INT8 quantization, and Vitis AI deployment.
+FPGA-accelerated image enhancement using Residual CNNs, INT8 quantization, and Vitis AI deployment.
 
-This project focuses on building a hardware-efficient image restoration system capable of enhancing degraded images while maintaining high inference speed on FPGA platforms. The deployment pipeline is optimized for low-precision INT8 execution without sacrificing visual restoration quality.
-
----
-
-# ✨ Highlights
-
-- Residual CNN architecture optimized for image restoration
-- INT8 quantization-aware deployment using Vitis AI
-- FPGA-accelerated inference with DPU execution
-- `.xmodel` generation for Xilinx platforms
-- PSNR / SSIM evaluation workflows
-- Docker-based reproducible environment
-- Hardware vs software benchmarking
-- Optimized for edge-AI and embedded deployment
+This project focuses on building a fast and hardware-efficient image restoration pipeline capable of enhancing degraded images while maintaining high inference performance on FPGA platforms.
 
 ---
 
-# 🚀 Project Overview
+## ✨ Features
 
-Modern image enhancement models often achieve excellent results on GPUs but struggle to run efficiently on edge hardware. This project bridges that gap by combining:
+- Residual CNN image enhancement
+- INT8 quantization workflow
+- FPGA-accelerated inference
+- Vitis AI deployment pipeline
+- `.xmodel` generation support
+- PSNR / SSIM evaluation
+- Docker-based environment
+- Hardware benchmarking
 
-- Deep learning-based image restoration
+---
+
+## 🚀 Project Overview
+
+Modern image enhancement models achieve strong results on GPUs but are often difficult to deploy efficiently on edge hardware.
+
+This project combines:
+
+- Deep learning image restoration
 - FPGA hardware acceleration
 - Quantization-aware optimization
 - Efficient deployment workflows
@@ -41,7 +43,7 @@ while achieving fast and efficient inference on FPGA hardware.
 
 ---
 
-# 🧠 Deployment Pipeline
+## 🧠 Deployment Pipeline
 
 ```text
 Dataset
@@ -61,7 +63,7 @@ Enhanced Output
 
 ---
 
-# 🛠 Technology Stack
+## 🛠 Technology Stack
 
 | Area | Technology |
 |------|-------------|
@@ -69,26 +71,23 @@ Enhanced Output
 | Deployment Framework | Vitis AI |
 | Hardware Platform | Xilinx FPGA |
 | Quantization | INT8 |
-| Model Architecture | Residual CNN |
 | Runtime | DPU Execution |
-| Evaluation | PSNR / SSIM |
 | Environment | Docker |
 | Language | Python 3.10 |
 
 ---
 
-# ⚡ Hardware Platform
+## ⚡ Hardware Platform
 
 Validated on:
 
 - Xilinx ZCU104 FPGA Board
 - Vitis AI Runtime Environment
-- INT8 Quantized Deployment Flow
 - DPU-Based Hardware Acceleration
 
 ---
 
-# 📂 Repository Structure
+## 📂 Repository Structure
 
 ```text
 FPGA-Image-Enhancement/
@@ -119,14 +118,14 @@ FPGA-Image-Enhancement/
 
 ---
 
-# 💻 Software Inference
+## 💻 Software Inference
 
 The software inference pipeline:
 
-- Loads the trained Residual CNN model
+- Loads the trained model
 - Processes degraded PNG images
-- Generates enhanced outputs automatically
-- Saves inference results into the output directory
+- Generates enhanced outputs
+- Saves results automatically
 
 ### Input Directory
 
@@ -140,7 +139,7 @@ testing_images/degraded/
 output/
 ```
 
-### Software Model
+### Model File
 
 ```text
 models/best_model_arch1.pth
@@ -148,22 +147,19 @@ models/best_model_arch1.pth
 
 ---
 
-# 🔌 FPGA Deployment
+## 🔌 FPGA Deployment
 
-The repository also includes the FPGA deployment artifact:
+FPGA deployment model:
 
 ```text
 models/model_b8_c128_int.xmodel
 ```
 
-This model is compiled using the Vitis AI quantization and deployment workflow for FPGA DPU execution.
-
-Deployment features include:
+Deployment features:
 
 - FPGA inference execution
 - Runtime FPS benchmarking
-- USB-based deployment workflow
-- PuTTY terminal execution
+- USB deployment workflow
 - Hardware acceleration validation
 
 Detailed setup instructions are available inside:
@@ -174,11 +170,11 @@ docs/
 
 ---
 
-# 🐳 Docker Support
+## 🐳 Docker Support
 
-A reproducible Docker environment is included for easy setup and consistent execution across systems.
+A Docker environment is included for reproducible execution and deployment.
 
-Setup instructions:
+Setup guide:
 
 ```text
 docs/SOFTWARE_SETUP.md
@@ -186,29 +182,28 @@ docs/SOFTWARE_SETUP.md
 
 ---
 
-# 📊 Performance Evaluation
+## 📊 Performance Evaluation
 
-The repository includes evaluation artifacts for:
+The repository includes:
 
-- PSNR analysis
-- SSIM analysis
+- PSNR evaluation
+- SSIM evaluation
 - Runtime benchmarking
-- Hardware acceleration comparison
+- Hardware acceleration analysis
 - FPGA deployment validation
 
-The FPGA pipeline demonstrates significantly faster inference execution compared to traditional CPU-based workflows.
+The FPGA deployment workflow provides significantly faster inference compared to CPU-based execution.
 
 ---
 
-# 📘 Project Report
+## 📘 Project Report
 
-A complete technical report is included covering:
+The project report includes:
 
 - Residual CNN architecture
 - Quantization-aware training
 - FPGA deployment workflow
 - Hardware/software benchmarking
-- Vitis AI optimization
 - DPU inference pipeline
 - FPGA resource utilization
 
@@ -220,20 +215,18 @@ docs/Project_file.pdf
 
 ---
 
-# 🔮 Future Work
+## 🔮 Future Work
 
-Planned improvements include:
+Future improvements include:
 
 - Real-time video enhancement
-- Night vision enhancement systems
-- Lightweight edge-AI architectures
+- Night vision enhancement
 - Streaming FPGA inference
+- Lightweight edge-AI architectures
 - Advanced low-light restoration
-- Extreme noise suppression
-- Deployment optimization for embedded systems
 
 ---
 
-# 📄 License
+## 📄 License
 
 Released under the MIT License.
