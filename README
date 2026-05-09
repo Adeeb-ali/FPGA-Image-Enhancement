@@ -1,0 +1,280 @@
+# FPGA-Image-Enhancement
+
+## Quantization-Aware Residual CNN for FPGA-Based Image Enhancement
+
+FPGA-accelerated image enhancement pipeline using residual CNN architectures, INT8 quantization, and Vitis AI deployment workflow optimized for hardware-efficient inference execution.
+
+The project focuses on preserving enhancement residual quality during low-precision INT8 deployment so that restoration performance remains stable under FPGA inference constraints.
+
+---
+
+# Overview
+
+This repository contains deployment-oriented implementations and inference workflows for FPGA-based image enhancement using quantized residual CNN architectures.
+
+The system is designed to restore degraded images affected by noise, blur, low-light degradation, and complex real-world artifacts while maintaining efficient inference performance on FPGA hardware platforms.
+
+The workflow includes:
+
+* Residual CNN-based image enhancement
+* Quantization-aware optimization
+* INT8 deployment using Vitis AI
+* FPGA-compatible `.xmodel` generation
+* DPU-oriented inference execution
+* PSNR / SSIM evaluation workflows
+* Hardware acceleration benchmarking
+
+The repository includes:
+
+* trained PyTorch models (`.pth`)
+* FPGA deployment models (`.xmodel`)
+* inference scripts
+* deployment workflows
+* Docker execution environment
+* runtime validation outputs
+* evaluation artifacts
+* FPGA deployment documentation
+* project report and benchmarking analysis
+
+---
+
+# Key Features
+
+* FPGA-oriented AI deployment workflow
+* INT8 quantized inference pipeline
+* Residual-aware enhancement optimization
+* Hardware-software co-design workflow
+* Docker-based reproducible execution
+* Vitis AI deployment support
+* FPGA-compatible inference artifacts
+* DPU-oriented acceleration workflow
+* PSNR / SSIM evaluation pipeline
+* Hardware runtime benchmarking
+
+---
+
+# System Pipeline
+
+```text
+Dataset
+   ↓
+Residual CNN
+   ↓
+Quantization-Aware Optimization
+   ↓
+XModel Generation
+   ↓
+DPU Compilation
+   ↓
+FPGA Inference
+   ↓
+Enhanced Output
+```
+
+---
+
+# Technology Stack
+
+| Area                  | Technology         |
+| --------------------- | ------------------ |
+| Deep Learning         | PyTorch            |
+| Hardware Acceleration | FPGA               |
+| Quantization          | Vitis AI INT8      |
+| Deployment            | XModel + DPU       |
+| Framework             | Vitis AI           |
+| Model Architecture    | Residual CNN       |
+| Evaluation            | PSNR / SSIM        |
+| Runtime               | FPGA DPU Execution |
+| Environment           | Docker             |
+| Language              | Python 3.10        |
+
+---
+
+# Hardware Platform
+
+The deployment workflow was validated using:
+
+* Xilinx ZCU104 FPGA Board
+* Vitis AI Runtime Environment
+* INT8 Quantized Deployment Flow
+* DPU-Based Hardware Acceleration
+
+---
+
+# Repository Structure
+
+```text
+FPGA-Image-Enhancement/
+│
+├── models/
+│   ├── best_model_arch1.pth
+│   └── model_b8_c128_int.xmodel
+│
+├── testing_code/
+│   ├── model_builder.py
+│   └── test.py
+│
+├── testing_images/
+│   ├── clean/
+│   └── degraded/
+│
+├── results/
+├── output/
+│
+├── docs/
+│   ├── SOFTWARE_SETUP.md
+│   └── final_anas_adeeb_12(2).pdf
+│
+├── Dockerfile
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Software Inference
+
+The software inference pipeline automatically:
+
+* loads the trained residual CNN model
+* processes degraded PNG input images
+* generates enhanced outputs
+* creates output directories automatically during execution
+
+Input images should be placed inside:
+
+```text
+testing_images/degraded/
+```
+
+Generated outputs are automatically saved inside:
+
+```text
+output/
+```
+
+Software inference model:
+
+```text
+models/best_model_arch1.pth
+```
+
+---
+
+# FPGA Deployment
+
+The repository also includes the FPGA deployment model:
+
+```text
+models/model_b8_c128_int.xmodel
+```
+
+The `.xmodel` artifact is generated using the Vitis AI quantization and compilation workflow for FPGA-oriented DPU inference execution.
+
+The deployment workflow supports:
+
+* USB-based deployment workflow
+* PuTTY runtime execution
+* FPGA DPU inference
+* runtime FPS evaluation
+* hardware acceleration benchmarking
+
+Detailed FPGA deployment and setup instructions are available inside:
+
+```text
+docs/
+```
+
+Use the deployment documentation files inside the `docs/` directory for:
+
+* FPGA runtime setup
+* USB-based model transfer
+* PuTTY terminal workflow
+* `.xmodel` deployment process
+* FPGA inference execution
+* hardware runtime validation
+
+---
+
+# Docker Support
+
+The repository includes a Docker-based execution environment for reproducible inference workflows.
+
+Docker setup and software execution instructions are available in:
+
+```text
+docs/SOFTWARE_SETUP.md
+```
+
+---
+
+# Project Report
+
+A complete technical project report is included in the repository.
+
+Project report location:
+
+```text
+docs/Project_file.pdf
+```
+
+The report includes:
+
+* residual CNN architecture design
+* quantization-aware training methodology
+* FPGA deployment workflow
+* Docker-based execution environment
+* hardware/software comparative analysis
+* PSNR / SSIM evaluation
+* FPGA resource utilization
+* runtime benchmarking results
+* Vitis AI deployment pipeline
+* DPU-based inference execution
+
+The report documents the complete FPGA-oriented image enhancement workflow, including INT8 deployment using Vitis AI and hardware inference execution on the Xilinx ZCU104 platform.
+
+---
+
+# Performance Evaluation
+
+The repository includes:
+
+* PSNR evaluation results
+* SSIM evaluation results
+* gain analysis graphs
+* runtime inference outputs
+* hardware deployment validation
+* software vs FPGA execution analysis
+
+The FPGA deployment workflow demonstrates significantly faster inference execution compared to CPU-based execution workflows.
+
+---
+
+# Important Note
+
+This repository focuses on deployment workflows, inference pipelines, and FPGA-oriented execution artifacts.
+
+The complete research and training pipeline implementation is not publicly disclosed due to ongoing optimization and experimental development work.
+
+---
+
+# Future Work
+
+Future development will focus on improving robustness under extreme real-world degradation conditions and expanding deployment-oriented AI vision applications.
+
+Planned future directions include:
+
+* Extreme noise removal under highly degraded imaging conditions
+* Restoration of structured, random, and mixed noise patterns
+* Improved low-light and night-scene enhancement
+* FPGA-accelerated night vision AI systems
+* Real-time video enhancement pipelines
+* Streaming FPGA inference workflows
+* Advanced deployment optimization
+* Lightweight edge-AI architectures
+
+---
+
+# License
+
+This project is released under the MIT License.
