@@ -1,0 +1,6 @@
+Do not use these images; they are only for testing purposes.
+
+If you perform manual testing, use the same file and folder names.  
+Do not rename `test.py` unless you also make the required small changes inside the file.
+
+I recommend using Docker installation because it makes the setup and deployment process much easier to understand and manage.
