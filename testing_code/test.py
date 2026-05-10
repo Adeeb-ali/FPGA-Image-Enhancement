@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import argparse
 import pandas as pd
 import torch
 import numpy as np
@@ -21,33 +22,44 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print(f"\nUsing Device: {DEVICE}")
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 MODEL_PATH = os.path.join(
-    BASE_DIR,
-    "..",
+    ROOT_DIR,
     "models",
     "best_model_arch1.pth"
 )
 
-CLEAN_DIR = os.path.join(
-    BASE_DIR,
-    "..",
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--input",
+    type=str,
+    default=os.path.join(
+        ROOT_DIR,
+        "testing_images",
+        "degraded"
+    ),
+    help="Input image directory"
+)
+
+parser.add_argument(
+    "--output",
+    type=str,
+    default=os.path.join(
+        ROOT_DIR,
+        "outputs"
+    ),
+    help="Output directory"
+)
+
+args = parser.parse_args()
+
+INPUT_DIR = args.input
+OUTPUT_DIR = args.output
+
+GT_DIR = os.path.join(
+    ROOT_DIR,
     "testing_images",
     "clean"
-)
-
-DEG_DIR = os.path.join(
-    BASE_DIR,
-    "..",
-    "testing_images",
-    "degraded"
-)
-
-OUTPUT_DIR = os.path.join(
-    BASE_DIR,
-    "..",
-    "outputs"
 )
 
 IMG_DIR = os.path.join(OUTPUT_DIR, "enhanced")
@@ -69,7 +81,7 @@ def compute_psnr(a, b):
     if mse == 0:
         return 100.0
 
-    return float(10 * np.log10(1.0 / mse))
+    return 10 * np.log10(1.0 / mse)
 
 
 def compute_ssim(a, b):
@@ -77,39 +89,42 @@ def compute_ssim(a, b):
     a = a.squeeze().permute(1, 2, 0).cpu().numpy()
     b = b.squeeze().permute(1, 2, 0).cpu().numpy()
 
-    return float(
-        structural_similarity(
-            a,
-            b,
-            channel_axis=2,
-            data_range=1.0
-        )
+    return structural_similarity(
+        a,
+        b,
+        channel_axis=2,
+        data_range=1.0
     )
 
 
 print("\nLoading Model...")
 
-ckpt = torch.load(
+checkpoint = torch.load(
     MODEL_PATH,
     map_location=DEVICE
 )
 
 model = build_model(
-    ckpt["config"]
+    checkpoint["config"]
 ).to(DEVICE)
 
 model.load_state_dict(
-    ckpt["model_state"]
+    checkpoint["model_state"]
 )
 
 model.eval()
 
 print("Model Loaded")
 
+if not os.path.exists(INPUT_DIR):
+    raise FileNotFoundError(
+        f"Input directory not found: {INPUT_DIR}"
+    )
+
 files = sorted(
     list(
-        set(os.listdir(CLEAN_DIR)) &
-        set(os.listdir(DEG_DIR))
+        set(os.listdir(GT_DIR)) &
+        set(os.listdir(INPUT_DIR))
     )
 )
 
@@ -130,47 +145,41 @@ start_total = time.time()
 
 with torch.no_grad():
 
-    for i, name in enumerate(files):
+    for name in files:
 
         if processed_images >= NUM_IMAGES:
             break
 
         print(f"\nProcessing: {name}")
 
-        clean_path = os.path.join(CLEAN_DIR, name)
-        deg_path = os.path.join(DEG_DIR, name)
+        clean_path = os.path.join(GT_DIR, name)
+        degraded_path = os.path.join(INPUT_DIR, name)
 
         clean = cv2.imread(clean_path)
-        deg = cv2.imread(deg_path)
+        degraded = cv2.imread(degraded_path)
 
-        if clean is None or deg is None:
+        if clean is None or degraded is None:
             print("Failed to read image")
             continue
 
-        clean = cv2.cvtColor(
-            clean,
-            cv2.COLOR_BGR2RGB
-        ) / 255.0
+        clean = cv2.cvtColor(clean, cv2.COLOR_BGR2RGB)
+        degraded = cv2.cvtColor(degraded, cv2.COLOR_BGR2RGB)
 
-        deg = cv2.cvtColor(
-            deg,
-            cv2.COLOR_BGR2RGB
-        ) / 255.0
+        clean = clean.astype(np.float32) / 255.0
+        degraded = degraded.astype(np.float32) / 255.0
 
-        clean_tensor = torch.tensor(clean)\
-            .permute(2, 0, 1)\
-            .unsqueeze(0)\
-            .float()\
+        clean_tensor = torch.from_numpy(clean) \
+            .permute(2, 0, 1) \
+            .unsqueeze(0) \
             .to(DEVICE)
 
-        deg_tensor = torch.tensor(deg)\
-            .permute(2, 0, 1)\
-            .unsqueeze(0)\
-            .float()\
+        degraded_tensor = torch.from_numpy(degraded) \
+            .permute(2, 0, 1) \
+            .unsqueeze(0) \
             .to(DEVICE)
 
         psnr_before = compute_psnr(
-            deg_tensor,
+            degraded_tensor,
             clean_tensor
         )
 
@@ -179,84 +188,78 @@ with torch.no_grad():
             skipped_images += 1
 
             print(
-                f"Skipped "
-                f"(PSNR={psnr_before:.2f})"
+                f"Skipped (PSNR={psnr_before:.2f})"
             )
 
             continue
 
         start_inf = time.time()
 
-        out = model(deg_tensor)
+        output = model(degraded_tensor)
 
         inference_time = time.time() - start_inf
 
-        out = torch.clamp(out, 0, 1)
+        output = torch.clamp(output, 0, 1)
 
         psnr_after = compute_psnr(
-            out,
+            output,
             clean_tensor
         )
 
         ssim_before = compute_ssim(
-            deg_tensor,
+            degraded_tensor,
             clean_tensor
         )
 
         ssim_after = compute_ssim(
-            out,
+            output,
             clean_tensor
         )
 
         gain = psnr_after - psnr_before
 
         print(
-            f"PSNR : "
-            f"{psnr_before:.2f} -> "
-            f"{psnr_after:.2f}"
+            f"PSNR : {psnr_before:.2f} -> {psnr_after:.2f}"
         )
 
         print(
-            f"SSIM : "
-            f"{ssim_before:.4f} -> "
-            f"{ssim_after:.4f}"
+            f"SSIM : {ssim_before:.4f} -> {ssim_after:.4f}"
         )
 
-        print(
-            f"Gain : {gain:.2f} dB"
-        )
+        print(f"Gain : {gain:.2f} dB")
 
         print(
-            f"Inference : "
-            f"{inference_time:.4f} sec"
+            f"Inference : {inference_time:.4f} sec"
         )
 
         save_image(
-            out,
+            output,
             os.path.join(
                 IMG_DIR,
                 f"{processed_images}_enhanced.jpg"
             )
         )
 
-        input_np = deg_tensor.squeeze()\
-            .permute(1, 2, 0)\
-            .cpu()\
-            .numpy()
+        input_img = (
+            degraded_tensor.squeeze()
+            .permute(1, 2, 0)
+            .cpu()
+            .numpy() * 255
+        ).astype(np.uint8)
 
-        output_np = out.squeeze()\
-            .permute(1, 2, 0)\
-            .cpu()\
-            .numpy()
+        output_img = (
+            output.squeeze()
+            .permute(1, 2, 0)
+            .cpu()
+            .numpy() * 255
+        ).astype(np.uint8)
 
-        gt_np = clean_tensor.squeeze()\
-            .permute(1, 2, 0)\
-            .cpu()\
-            .numpy()
-
-        input_img = (input_np * 255).astype(np.uint8)
-        output_img = (output_np * 255).astype(np.uint8)
-        gt_img = (gt_np * 255).astype(np.uint8)
+        gt_img = (
+            clean_tensor.squeeze()
+            .permute(1, 2, 0)
+            .cpu()
+            .numpy() * 255
+        ).astype(np.uint8)
 
         cv2.putText(
             input_img,
@@ -304,23 +307,15 @@ with torch.no_grad():
             f"{processed_images}_compare.jpg"
         )
 
-        cv2.imwrite(
-            compare_path,
-            comparison
-        )
+        cv2.imwrite(compare_path, comparison)
 
         rows.append({
-
             "image": name,
-
             "psnr_before": psnr_before,
             "psnr_after": psnr_after,
-
             "ssim_before": ssim_before,
             "ssim_after": ssim_after,
-
             "gain": gain,
-
             "inference_time_sec": inference_time
         })
 
@@ -344,10 +339,7 @@ csv_path = os.path.join(
     "results.csv"
 )
 
-df.to_csv(
-    csv_path,
-    index=False
-)
+df.to_csv(csv_path, index=False)
 
 total_time = time.time() - start_total
 
@@ -391,6 +383,8 @@ print(
 print(f"\nFPS : {fps:.2f}")
 
 print("\nSaved Results")
-print(f"Enhanced : {IMG_DIR}")
+
+print(f"Enhanced  : {IMG_DIR}")
 print(f"Comparison : {COMPARE_DIR}")
 print(f"CSV : {csv_path}")
+
