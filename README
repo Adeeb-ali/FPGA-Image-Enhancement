@@ -1,294 +1,87 @@
-# FPGA Edge AI Image Enhancement
-> A full FPGA-oriented image enhancement pipeline using Residual CNNs, INT8 quantization, and Xilinx Vitis AI for real-time edge inference.
+&lt;p align="center"&gt;
+  &lt;img src="https://img.shields.io/badge/FPGA-Edge%20AI-FF6F00?style=for-the-badge&logo=xilinx&logoColor=white" /&gt;
+  &lt;img src="https://img.shields.io/badge/INT8-Quantization-00C853?style=for-the-badge" /&gt;
+  &lt;img src="https://img.shields.io/badge/Vitis%20AI-DPU-2979FF?style=for-the-badge" /&gt;
+  &lt;img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" /&gt;
+  &lt;img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" /&gt;
+&lt;/p&gt;
+
+&lt;h1 align="center"&gt;
+  &lt;img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png" width="40" /&gt;
+  FPGA Edge AI Image Enhancement
+&lt;/h1&gt;
+
+&lt;p align="center"&gt;
+  &lt;b&gt;Real-time image enhancement pipeline built for FPGA hardware — from PyTorch to DPU inference.&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p align="center"&gt;
+  &lt;a href="#-overview"&gt;Overview&lt;/a&gt; •
+  &lt;a href="#-features"&gt;Features&lt;/a&gt; •
+  &lt;a href="#-quick-start"&gt;Quick Start&lt;/a&gt; •
+  &lt;a href="#-pipeline"&gt;Pipeline&lt;/a&gt; •
+  &lt;a href="#-performance"&gt;Performance&lt;/a&gt; •
+  &lt;a href="#-deployment"&gt;Deployment&lt;/a&gt;
+&lt;/p&gt;
+
 ---
-## Overview
-Most image enhancement systems stop at GPU inference:
-```python
-model(image)
 
-This project does the opposite — the entire pipeline is designed around FPGA deployment, low-latency inference, and hardware-aware optimization.
+## 🎯 Overview
 
-From Quantization-Aware Training (QAT) to Vitis AI compilation and DPU execution, every stage is implemented with embedded Edge AI deployment in mind.
+&gt; Most image enhancement systems stop at GPU inference. **This project doesn't.**
 
-The result is a real-time FPGA image enhancement system capable of:
+The entire pipeline is designed around **FPGA deployment**, **low-latency inference**, and **hardware-aware optimization**. From Quantization-Aware Training (QAT) to Vitis AI compilation and DPU execution, every stage is built with embedded Edge AI deployment in mind.
 
-* low-light restoration
-* denoising
-* blur reduction
-* efficient INT8 inference
-* hardware-accelerated deployment
+### What it does
+| Task | Status |
+|------|--------|
+| 🔅 Low-light restoration | ✅ |
+| 🌫️ Denoising | ✅ |
+| 🔍 Blur reduction | ✅ |
+| ⚡ Efficient INT8 inference | ✅ |
+| 🚀 Hardware-accelerated deployment | ✅ |
 
-⸻
+**No TensorRT. No GPU dependency.** Built specifically for FPGA acceleration pipelines.
 
-Features
+---
 
-Component	Implementation
-Deep Learning Model	Residual CNN architecture
-Quantization	INT8 Quantization-Aware Training
-FPGA Workflow	Xilinx Vitis AI deployment
-Hardware Acceleration	DPU inference engine
-Enhancement Tasks	Denoising, low-light enhancement, deblurring
-Evaluation	PSNR and SSIM metrics
-Deployment	Docker-based runtime
-Target Platform	FPGA Edge AI systems
+## ✨ Features
 
-No TensorRT. No GPU dependency during deployment. Built specifically for FPGA acceleration pipelines.
+| Component | Implementation |
+|-----------|----------------|
+| **Deep Learning Model** | Residual CNN architecture |
+| **Quantization** | INT8 Quantization-Aware Training |
+| **FPGA Workflow** | Xilinx Vitis AI deployment |
+| **Hardware Acceleration** | DPU inference engine |
+| **Enhancement Tasks** | Denoising, low-light enhancement, deblurring |
+| **Evaluation** | PSNR & SSIM metrics |
+| **Deployment** | Docker-based runtime |
+| **Target Platform** | FPGA Edge AI systems |
 
-⸻
+---
 
-Project Structure
-
+## 📁 Project Structure
 FPGA-Image-Enhancement/
-│
-├── models/                  # Trained and quantized models
-├── testing_code/            # Inference and evaluation scripts
-├── testing_images/          # Sample input images
-├── output/                  # Enhanced output images
-├── results/                 # Benchmark and evaluation outputs
-├── docs/                    # Technical documentation
-│
+├── 📂 models/              # Trained & quantized models
+├── 📂 testing_code/        # Inference & evaluation scripts
+├── 📂 testing_images/      # Sample input images
+├── 📂 output/              # Enhanced output images
+├── 📂 results/             # Benchmark & evaluation outputs
+├── 📂 docs/                # Technical documentation
 ├── Dockerfile
 ├── requirements.txt
 └── README.md
 
-⸻
 
-Quick Start
+---
 
-Option 1 — Docker (Recommended)
+## 🚀 Quick Start
 
-Docker provides a reproducible FPGA inference environment.
+### Option 1 — Docker (Recommended)
 
+```bash
 # Build Docker image
 docker build -t fpga-enhancement .
+
 # Run container
 docker run -it fpga-enhancement
-
-⸻
-
-Option 2 — Manual Installation
-
-Requirements: Python 3.10+, PyTorch, Vitis AI Runtime
-
-⸻
-
-Step 1 — Clone Repository
-
-git clone https://github.com/your-username/FPGA-Image-Enhancement.git
-cd FPGA-Image-Enhancement
-
-⸻
-
-Step 2 — Install Dependencies
-
-pip install -r requirements.txt
-
-⸻
-
-Step 3 — Run Inference
-
-python testing_code/test.py
-
-⸻
-
-System Pipeline
-
-Input Image
-    │
-    ▼
-┌─────────────────────┐
-│ Residual CNN Train  │  Learn enhancement mappings using residual blocks
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Quantization Aware  │  Simulate INT8 arithmetic during training
-│ Training (QAT)      │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ INT8 Optimization   │  Reduce precision for FPGA efficiency
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Vitis AI Compiler   │  Compile network for DPU execution
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ XModel Generation   │  Generate deployable FPGA artifact
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ DPU FPGA Inference  │  Hardware-accelerated CNN execution
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Enhanced Output     │  Restored and denoised image output
-└─────────────────────┘
-
-⸻
-
-Technical Reference
-
-Residual CNN Architecture
-
-* Residual learning improves convergence stability
-* Preserves low-frequency image information
-* Enables deeper enhancement networks with reduced degradation
-
-Quantization-Aware Training (QAT)
-
-* Simulates INT8 inference during training
-* Minimizes accuracy loss after quantization
-* Produces FPGA-ready deployment models
-
-INT8 Optimization
-
-* Converts FP32 operations into fixed-point arithmetic
-* Reduces memory and compute overhead
-* Improves DPU inference efficiency
-
-Vitis AI Deployment
-
-* Model compiled using Xilinx Vitis AI toolchain
-* Generates .xmodel FPGA deployment artifacts
-* Targets DPU hardware accelerators
-
-DPU Hardware Acceleration
-
-* Offloads CNN inference from CPU to FPGA fabric
-* Enables low-latency real-time execution
-* Improves throughput and power efficiency
-
-Evaluation Metrics
-
-* PSNR — reconstruction quality measurement
-* SSIM — perceptual image similarity metric
-
-⸻
-
-Performance
-
-Metric	CPU	FPGA
-Precision	FP32	INT8
-Inference Speed	0.85 – 1.3 FPS	8.37 FPS
-Deployment Target	CPU	FPGA DPU
-Relative Performance	1×	8–10× Faster
-
-The FPGA implementation significantly improves throughput while maintaining stable enhancement quality under INT8 quantization.
-
-⸻
-
-FPGA Deployment Workflow
-
-PyTorch Model
-      ↓
-Quantization
-      ↓
-Vitis AI Compilation
-      ↓
-.xmodel Generation
-      ↓
-DPU Deployment
-      ↓
-FPGA Inference
-
-Deployment artifact:
-
-models/model_b8_c128_int.xmodel
-
-⸻
-
-Intermediate Outputs and Benchmarking
-
-The repository stores intermediate outputs for:
-
-* quantized models
-* enhanced image outputs
-* FPGA benchmark results
-* PSNR / SSIM evaluations
-* deployment validation
-
-Useful for:
-
-* CPU vs FPGA comparison
-* quantization analysis
-* deployment debugging
-* DPU performance benchmarking
-
-⸻
-
-Applications
-
-* Smart surveillance systems
-* Embedded Edge AI devices
-* Autonomous robotics
-* Real-time image restoration
-* FPGA acceleration research
-* Low-light enhancement systems
-
-⸻
-
-Troubleshooting
-
-Missing dependencies
-
-pip install -r requirements.txt
-
-⸻
-
-Docker not installed
-
-docker --version
-
-⸻
-
-FPGA runtime issues
-
-Verify:
-
-* Vitis AI runtime installation
-* FPGA board compatibility
-* DPU overlay configuration
-
-⸻
-
-Slow CPU inference
-
-CPU execution is intended for validation only. Real-time performance is achieved through FPGA DPU acceleration.
-
-⸻
-
-Future Improvements
-
-* Real-time video enhancement
-* Streaming FPGA inference
-* INT4 quantization
-* Lightweight Edge-AI architectures
-* Multi-scale restoration networks
-* Advanced low-light reconstruction
-
-⸻
-
-License
-
-MIT License — Copyright (c) 2026 Adeeb Ali
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
-
-⸻
-
-Acknowledgements
-
-* Xilinx Vitis AI ecosystem
-* PyTorch deep learning framework
-* Residual learning research community
-* FPGA and Edge AI open-source ecosystem
-
