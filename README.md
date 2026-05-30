@@ -69,8 +69,8 @@ The objective is to achieve **high-quality image enhancement with low latency an
 
 | Metric                     | Value          |
 | -------------------------- | -------------- |
-| Software Average PSNR Gain | **+10.94 dB**  |
-| Hardware Average PSNR Gain | **+9.71 dB**   |
+| Software Average PSNR Gain | **+5.94 dB**  |
+| Hardware Average PSNR Gain | **+1.21 dB**   |
 | Average SSIM               | **0.90**       |
 | FPGA Inference Speed       | **8.37 FPS**   |
 | CPU Inference Speed        | 0.85 – 1.3 FPS |
@@ -108,7 +108,7 @@ The objective is to achieve **high-quality image enhancement with low latency an
 | Metric            | Software (FP32) | Hardware (INT8 FPGA) |
 | ----------------- | --------------- | -------------------- |
 | Precision         | FP32            | INT8                 |
-| Avg PSNR Gain     | +10.94 dB       | +9.71 dB             |
+| Avg PSNR Gain     | +5.94 dB       | +1.21 dB             |
 | Avg SSIM          | 0.90            | 0.90                 |
 | Inference Speed   | 0.85–1.3 FPS    | **8.37 FPS**         |
 | Speedup           | 1×              | **8–10×**            |
@@ -159,22 +159,6 @@ results_final_1000.csv
 * Execution Time: **667.3 s**
 * Throughput: **8.37 FPS**
 * Average Latency: **119.5 ms/frame**
-
----
-
-# 🔧 FPGA Resource Utilization
-
-**Platform:** Xilinx ZCU104 (XCZU7EV)
-**DPU:** DPUCZDX8G B4096
-**Toolchain:** Vitis AI 3.0
-
-| Resource   | Used   | Available | Utilization   |
-| ---------- | ------ | --------- | ------------- |
-| LUTs       | 52,161 | 230,400   | 22.6%         |
-| Flip-Flops | 98,249 | 460,800   | 21.3%         |
-| DSP Slices | 710    | 1,728     | 41.1%         |
-| UltraRAM   | 30     | 96        | 31.3%         |
-| Block RAM  | 0      | 312       | UltraRAM Used |
 
 ---
 
