@@ -115,7 +115,7 @@ The objective is to achieve **high-quality image enhancement with low latency an
 | Model Size        | Full FP32       | ~4× Smaller          |
 | Power Consumption | CPU             | **≈ 5.1 W**          |
 | Deployment Target | CPU             | Xilinx ZCU104        |
-| Accuracy Loss     | —               | ≈ −1.23 dB           |
+
 
 ---
 
