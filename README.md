@@ -82,6 +82,8 @@ The objective is to achieve **high-quality image enhancement with low latency an
 
 ## 📈 Software Results (FP32)
 
+The tables below highlight the best-performing software and FPGA hardware enhancement results obtained during evaluation
+
 | Image ID    | Degraded PSNR | Enhanced PSNR | Gain       | Degraded SSIM | Enhanced SSIM |
 | ----------- | ------------- | ------------- | ---------- | ------------- | ------------- |
 | 91          | 14.41         | 26.36         | **+11.95** | 0.17          | 0.80          |
