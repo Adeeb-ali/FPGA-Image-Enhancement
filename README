@@ -1,87 +1,22 @@
-&lt;p align="center"&gt;
-  &lt;img src="https://img.shields.io/badge/FPGA-Edge%20AI-FF6F00?style=for-the-badge&logo=xilinx&logoColor=white" /&gt;
-  &lt;img src="https://img.shields.io/badge/INT8-Quantization-00C853?style=for-the-badge" /&gt;
-  &lt;img src="https://img.shields.io/badge/Vitis%20AI-DPU-2979FF?style=for-the-badge" /&gt;
-  &lt;img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" /&gt;
-  &lt;img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" /&gt;
-&lt;/p&gt;
+# My Project
 
-&lt;h1 align="center"&gt;
-  &lt;img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png" width="40" /&gt;
-  FPGA Edge AI Image Enhancement
-&lt;/h1&gt;
+A Python app for downloading and processing media files.
 
-&lt;p align="center"&gt;
-  &lt;b&gt;Real-time image enhancement pipeline built for FPGA hardware — from PyTorch to DPU inference.&lt;/b&gt;
-&lt;/p&gt;
+## Features
 
-&lt;p align="center"&gt;
-  &lt;a href="#-overview"&gt;Overview&lt;/a&gt; •
-  &lt;a href="#-features"&gt;Features&lt;/a&gt; •
-  &lt;a href="#-quick-start"&gt;Quick Start&lt;/a&gt; •
-  &lt;a href="#-pipeline"&gt;Pipeline&lt;/a&gt; •
-  &lt;a href="#-performance"&gt;Performance&lt;/a&gt; •
-  &lt;a href="#-deployment"&gt;Deployment&lt;/a&gt;
-&lt;/p&gt;
+- Download videos
+- Convert audio
+- Batch processing
 
----
-
-## 🎯 Overview
-
-&gt; Most image enhancement systems stop at GPU inference. **This project doesn't.**
-
-The entire pipeline is designed around **FPGA deployment**, **low-latency inference**, and **hardware-aware optimization**. From Quantization-Aware Training (QAT) to Vitis AI compilation and DPU execution, every stage is built with embedded Edge AI deployment in mind.
-
-### What it does
-| Task | Status |
-|------|--------|
-| 🔅 Low-light restoration | ✅ |
-| 🌫️ Denoising | ✅ |
-| 🔍 Blur reduction | ✅ |
-| ⚡ Efficient INT8 inference | ✅ |
-| 🚀 Hardware-accelerated deployment | ✅ |
-
-**No TensorRT. No GPU dependency.** Built specifically for FPGA acceleration pipelines.
-
----
-
-## ✨ Features
-
-| Component | Implementation |
-|-----------|----------------|
-| **Deep Learning Model** | Residual CNN architecture |
-| **Quantization** | INT8 Quantization-Aware Training |
-| **FPGA Workflow** | Xilinx Vitis AI deployment |
-| **Hardware Acceleration** | DPU inference engine |
-| **Enhancement Tasks** | Denoising, low-light enhancement, deblurring |
-| **Evaluation** | PSNR & SSIM metrics |
-| **Deployment** | Docker-based runtime |
-| **Target Platform** | FPGA Edge AI systems |
-
----
-
-## 📁 Project Structure
-FPGA-Image-Enhancement/
-├── 📂 models/              # Trained & quantized models
-├── 📂 testing_code/        # Inference & evaluation scripts
-├── 📂 testing_images/      # Sample input images
-├── 📂 output/              # Enhanced output images
-├── 📂 results/             # Benchmark & evaluation outputs
-├── 📂 docs/                # Technical documentation
-├── Dockerfile
-├── requirements.txt
-└── README.md
-
-
----
-
-## 🚀 Quick Start
-
-### Option 1 — Docker (Recommended)
+## Installation
 
 ```bash
-# Build Docker image
-docker build -t fpga-enhancement .
+pip install -r requirements.txt
+python main.py
+```
 
-# Run container
-docker run -it fpga-enhancement
+## Usage
+
+```bash
+python main.py
+```
